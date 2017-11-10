@@ -1,7 +1,5 @@
-﻿using Cake.Core.IO;
-using FluentAssertions;
-using NSubstitute;
-using NSubstituteAutoMocker;
+﻿using Cake.Core;
+using Cake.Testing;
 using NUnit.Framework;
 
 namespace Cake.Android.ApkSigning.Tests
@@ -12,9 +10,13 @@ namespace Cake.Android.ApkSigning.Tests
         [Test]
         public void TestCase()
         {
-            var autoMocker = new NSubstituteAutoMocker<KeyTool>();
+            var autoMocker = new NSubstituteAutoMocker<KeyTool>(new FakeEnvironment(PlatformFamily.OSX));
+            autoMocker.
 
-            teste.Should().Be("keytool");
+            autoMocker.ClassUnderTest.GenerateKeyPair(new KeyToolSettings()
+            {
+                ToolPath = "keytool"
+            });
         }
     }
 }
